@@ -1,3 +1,2 @@
-# bgltracker
-bgltracker is exactly what it says, a bgl (blood glucose level) tracker  
-Currently in gamma ;)
+# bglreadings
+bglreadings will be an online log for blood glucose levels (BGL)
