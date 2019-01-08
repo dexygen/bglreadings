@@ -8,6 +8,8 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="./ajax.lib.js"></script>
     <script src="./babel.min.js"></script>
+    <script src="./add_reading_modal.js" type="text/babel"></script>
+    <script src="./header_bar.js" type="text/babel"></script>
     <script src="./log_readings.js" type="text/babel"></script>
   </head>
   <body>
@@ -21,9 +23,7 @@
           <div>
             <h1>BGL Readings Log</h1>
           </div>
-          <div id="header-bar">
-            <a href="#">Add Reading</a>
-          </div>
+          <HeaderBar />
           <div>
             <table>
               <tbody>

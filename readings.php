@@ -5,8 +5,8 @@ class ReadingsController extends AbstractJrMvcController {
   const DB_PATH = "./readings.db";
   const READINGS_TABLE_DDL = <<<EOD
     CREATE TABLE bgl_reading (
-      id INTEGER PRIMARY KEY,
-      user INTEGER NOT NULL,
+      reading_id INTEGER PRIMARY KEY,
+      user_id INTEGER NOT NULL,
       date DATE NOT NULL,
       reading INTEGER NOT NULL
     );
@@ -31,17 +31,24 @@ function applyInputToModel() {
       }
     }
   
-    function jsonify_all_readings() {
+    function jsonify_readings() {
+      if (empty($_GET["user_id"])) {
+        return array();
+      }
+      
       $DBH_READINGS = new PDO('sqlite:' . ReadingsController::DB_PATH);
       $STMTH_SELECT_READINGS = $DBH_READINGS->prepare("SELECT * FROM bgl_reading");
       $STMTH_SELECT_READINGS->execute();
       $all_readings = $STMTH_SELECT_READINGS->fetchAll();
       $DBH_READINGS = null;
+      
       return json_encode($all_readings);
     }
 
     bootstrap_db();
-    $mto->setModelValue('readings', jsonify_all_readings()); 
+    
+  
+    $mto->setModelValue('readings', jsonify_readings()); 
     return $mto;
   }
 }
