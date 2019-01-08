@@ -1,9 +1,9 @@
 <?php
   /*
    * jrMvc (JackRabbitMvc -- formerly barebonesmvc-php) 
-   * is a one-file MVC micro-framework for PHP5.
+   * is a one-file MVC micro-framework for PHP 5+ (supports 7)
    * 
-   * Copyright (c) 2007, George M. Jempty
+   * Copyright (c) 2007-2019, George M. Jempty
    *
    * "A designer knows he has achieved perfection not when there is nothing left
    * to add, but when there is nothing left to take away."
@@ -14,24 +14,40 @@
    * USAGE:
    *
    <?php
-     require('jrmvc.lib.php');                                 // 1) require
+     require('jrmvc.lib.php');                              // 1) require library                           
 
-     class DemoController extends AbstractJrMvcController {    // 2) extend
-        function applyInputToModel() {                         // 3) implement
-           $mto = new JrMvcMTO('demo.tpl.php');               // 4) instantiate
-           // demo.tpl.php content: <pre>$model: <?php print_r($model); ?&gt;</pre>
+     class DemoMTO extends JrMvcMTO {                       // 1a) optionally extend MTO for non-template output, e.g. JSON
+       function onNullTemplate() {
+         echo json_encode($this->model);                    
+         // Instead a binary such as an xls or pdf could be sent
+       }
+     }
 
-           $mto->setModelValue('Su', 'Sunday');                // 5) assignments
+     class DemoController extends AbstractJrMvcController { // 2) extend Controller  
+        function applyInputToModel() {                      // 3) implement only required method
+           // Sample demo.tpl.php content: <pre>$model: <?php print_r($model); ?></pre>
+           $mto = new JrMvcMTO('demo.tpl.php');             // 4) instantiate
+           // To output json instead use extended MTO above: $mto = new DemoMTO(JrMvcMTO::NULL_TPL);
+           // Or in PHP 7 you can use an inner class instead of defining DemoMTO above this class:
+           /*
+           $mto = new class(JrMvcMTO::NULL_TPL) extends JrMvcMTO {
+               function onNullTemplate() {
+                   echo json_encode($this->model);
+               }
+           };
+           *//*
+                     
+           $mto->setModelValue('Su', 'Sunday');             // 5) assignments              
            $mto->setModelValue('Mo', 'Monday');
            $mto->setModelValue('Tu', 'Tuesday');
            $mto->setModelValue('We', 'Wednesday');
            $mto->setModelValues(['Th'=>'Thursday', 'Fr'=>'Friday', 'Sa'=>'Saturday']);
 
-           return $mto;                                        // 6) return
+           return $mto;                                     // 6) return MTO
          }
      }
 
-     DemoController::sendViewAsResponse(new DemoController());       // 7) send
+     DemoController::sendResponse(new DemoController());    // 7) send response
    *
    * OUTPUT:
    *
@@ -49,7 +65,7 @@
 
   interface IJrMvcController {
     function setMto(IModelXfer $mto);
-    static function sendViewAsResponse(IJrMvcController $controller);
+    static function sendResponse(IJrMvcController $controller);
     function applyInputToModel();
   }
   
@@ -60,7 +76,7 @@
       $this->mto = $mto;
     }
     
-    static function sendViewAsResponse(IJrMvcController $controller) {
+    static function sendResponse(IJrMvcController $controller) {
       $controller->setMto($controller->applyInputToModel());
       $controller->mto->applyModelToView();
     }
@@ -76,7 +92,7 @@
   abstract class AbstractMTO implements IModelXfer {
     protected $view;
     protected $model;
-    const NO_VIEW = null;
+    const NULL_TPL = null;
     
     function setView($view) {
       $this->view = $view;    
@@ -102,7 +118,7 @@
       $GLOBALS['_SESSION'] = $session;      
     }
     
-    protected function whenNoView() {}
+    protected function onNullTemplate() {}
   }
   
   class JrMvcMto extends AbstractMTO {    
@@ -111,12 +127,12 @@
     }
     
     function applyModelToView() {
-      # Ensures view does not have access to get/post variables,
-      # thus encouraging all access to them to occur within controller
+      # Ensures view does not have access to get/post variables, thus encouraging
+      # all access to them to occur within controller's applyInputToModel method
       $this->unsetNonSessionGlobals();
       
-      if (is_null($this->view)) {
-        $this->whenNoView();
+      if (empty($this->view)) {
+        $this->onNullTemplate();
       }
       else {
         $model = $this->model;
@@ -124,4 +140,3 @@
       }
     }    
   }
-?>
