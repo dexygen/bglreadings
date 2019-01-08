@@ -1,8 +1,4 @@
 class AddReadingModal extends React.Component {
-  saveReading() {
-    console.log('save reading from here');  
-  }
-  
   render() {
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
@@ -34,9 +30,8 @@ class AddReadingModal extends React.Component {
       <div className="backdrop" style={backdropStyle}>
         <div className="modal" style={modalStyle}>
           {this.props.children}
-
           <div className="footer">
-            <button onClick={this.saveReading}>
+            <button onClick={this.props.saveReading}>
               Save
             </button>
             &nbsp;&nbsp;
