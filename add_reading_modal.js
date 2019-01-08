@@ -1,4 +1,8 @@
 class AddReadingModal extends React.Component {
+  saveReading() {
+    console.log('save reading from here');  
+  }
+  
   render() {
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
@@ -20,8 +24,8 @@ class AddReadingModal extends React.Component {
     const modalStyle = {
       backgroundColor: '#fff',
       borderRadius: 5,
-      maxWidth: 500,
-      minHeight: 300,
+      maxWidth: 300,
+      minHeight: 200,
       margin: '0 auto',
       padding: 30
     };
@@ -32,8 +36,12 @@ class AddReadingModal extends React.Component {
           {this.props.children}
 
           <div className="footer">
+            <button onClick={this.saveReading}>
+              Save
+            </button>
+            &nbsp;&nbsp;
             <button onClick={this.props.onClose}>
-              Close
+              Cancel
             </button>
           </div>
         </div>

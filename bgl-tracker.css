@@ -28,3 +28,9 @@ th, td {
 th {
   text-align: left;
 }
+
+.form-element label {
+  display: inline-block;
+  width: 125px;
+  margin-bottom: 6px;
+}

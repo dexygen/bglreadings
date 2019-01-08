@@ -16,9 +16,17 @@ class HeaderBar extends React.Component {
         <div id="header-bar">
           <a href="#" onClick={this.toggleModal}>Add Reading</a>
         </div>
-        <AddReadingModal show={this.state.isOpen}
-          onClose={this.toggleModal}>
-          Here's some content for the modal
+        <AddReadingModal show={this.state.isOpen} onClose={this.toggleModal}>
+          <h2>Add Reading</h2>
+          <form>
+              <div className="form-element">
+                  <label>Date</label><input />
+              </div>
+              <div className="form-element">
+                  <label>Reading</label><input />
+              </div>
+          </form>
+          <div>&nbsp;</div>
         </AddReadingModal>
       </div>
     );
