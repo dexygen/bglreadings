@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>BGL Readings Log</title>
+    <link rel="stylesheet" href="bgl-tracker.css">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="./babel.min.js"></script>
+    <script src="./log_readings.js" type="text/babel"></script>
+  </head>
+  <body>
+    <div class="gutter">&nbsp;</div>
+    <div id="app-content"></div>
+    <div class="gutter">&nbsp;</div>
+    
+    <script type="text/babel">
+      ReactDOM.render(
+        <div>
+          <div>
+            <h1>BGL Readings Log</h1>
+          </div>
+          <div id="header-bar">
+            <a href="#">Add Reading</a>
+          </div>
+          <div>
+            <table>
+              <tbody>
+                <tr><th>Date</th><th>Fasting BGL</th></tr>
+                <LogReadings />
+              </tbody>
+            </table>
+          </div>
+        </div>,
+        document.getElementById('app-content')
+      );
+    </script>
+  </body>
+</html>

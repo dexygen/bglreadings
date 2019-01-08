@@ -1,1 +1,0 @@
-<?php echo file_get_contents('./bgl.md', FILE_USE_INCLUDE_PATH); ?>
