@@ -2,7 +2,15 @@
 require('jrmvc.lib.php');
 
 class ReadingsController extends AbstractJrMvcController {
-const DB_PATH = "./readings.db";
+  const DB_PATH = "./readings.db";
+  const READINGS_TABLE_DDL = <<<EOD
+    CREATE TABLE bgl_reading (
+      id INTEGER PRIMARY KEY,
+      user INTEGER NOT NULL,
+      date DATE NOT NULL,
+      reading INTEGER NOT NULL
+    );
+EOD;
 
 function applyInputToModel() {                      
     $mto = new JrMvcMTO('demo.tpl.php');             
@@ -17,6 +25,9 @@ function applyInputToModel() {
       if (!file_exists(ReadingsController::DB_PATH)) {
         $FH_READINGS_DB = fopen(ReadingsController::DB_PATH, "w");
         fclose($FH_READINGS_DB);
+        $DBH_READINGS = new PDO('sqlite:' . ReadingsController::DB_PATH);
+        $DBH_READINGS->exec(ReadingsController::READINGS_TABLE_DDL);
+        $DBH_READINGS = null;
       }
     }
 
