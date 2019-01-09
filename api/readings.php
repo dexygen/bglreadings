@@ -1,5 +1,5 @@
 <?php
-require('jrmvc.lib.php');
+require('./lib/jrmvc.lib.php');
 
 class ReadingsController extends AbstractJrMvcController {
   const DB_PATH = "./readings.db";

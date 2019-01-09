@@ -1,6 +1,6 @@
 class LogReadings extends React.Component {
   componentDidMount() {
-      ajax("GET", "./readings.php?user_id=1", function() {
+      ajax("GET", "./api/readings.php?user_id=1", function() {
         console.log("success");
       }, function() {
         console.log("error");
