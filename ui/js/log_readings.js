@@ -13,10 +13,9 @@ class LogReadings extends React.Component {
   }
   
   render() {
-    var K = 0;
     return (
       this.state.readings.map((reading) => {
-        return <Reading {...reading} key={"reading-" + ++K} />
+        return <Reading {...reading} key={"reading-" + reading.reading_id} />
       })
     );
   }

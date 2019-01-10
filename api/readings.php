@@ -44,7 +44,7 @@ function applyInputToModel() {
       }
       
       $DBH_READINGS = new PDO('sqlite:' . ReadingsController::DB_PATH);
-      $STMTH_SELECT_READINGS = $DBH_READINGS->prepare("SELECT * FROM bgl_reading");
+      $STMTH_SELECT_READINGS = $DBH_READINGS->prepare("SELECT * FROM bgl_reading ORDER BY reading_date DESC");
       $STMTH_SELECT_READINGS->execute();
       $all_readings = $STMTH_SELECT_READINGS->fetchAll();
       $DBH_READINGS = null;

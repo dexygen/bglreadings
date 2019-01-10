@@ -21,12 +21,20 @@ h1 {
   margin-bottom: 6px;
 }
 
+a:visited {
+  color: blue;
+}
+
 th, td {
   border-bottom: 1px solid #ddd;
 }
 
 th {
   text-align: left;
+}
+
+table th:first-child {
+  min-width: 6rem;
 }
 
 .form-element label {
