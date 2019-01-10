@@ -4,14 +4,21 @@ require('./lib/jrmvc.lib.php');
 class ReadingsController extends AbstractJrMvcController {
   const DB_PATH = "./readings.db";
   
-  const READINGS_TABLE_DDL = <<<EOD
+  const READINGS_TABLE_DDL = <<<HERE01
     CREATE TABLE bgl_reading (
       reading_id INTEGER PRIMARY KEY,
       user_id INTEGER NOT NULL,
       reading_date DATE NOT NULL,
       reading INTEGER NULL
     );
-EOD;
+HERE01;
+
+  const READINGS_TABLE_SQL_INSERT = <<<HERE02
+    INSERT INTO bgl_reading
+      (user_id, reading_date, reading) 
+    VALUES
+      (1, :reading_date, :reading)
+HERE02;
 
 function applyInputToModel() {                      
     $mto = new JrMvcMTO('demo.tpl.php');             
@@ -34,8 +41,15 @@ function applyInputToModel() {
   
     function add_reading() {
       $DBH_READINGS = new PDO('sqlite:' . ReadingsController::DB_PATH);
-      $STMTH_SELECT_READINGS = $DBH_READINGS->prepare("INSERT INTO bgl_reading(user_id, reading_date, reading) VALUES(1, '2019-01-06', 160)");
-      $STMTH_SELECT_READINGS->execute();
+      $DBH_READINGS->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+      $STMTH_INSERT_READING = $DBH_READINGS->prepare(ReadingsController::READINGS_TABLE_SQL_INSERT);
+      
+      $reading = filter_input(INPUT_POST, 'reading', FILTER_SANITIZE_NUMBER_INT); 
+      $STMTH_INSERT_READING->bindParam(':reading', $reading, PDO::PARAM_INT);
+      $reading_date = filter_input(INPUT_POST, 'reading_date', FILTER_SANITIZE_STRING);
+      $STMTH_INSERT_READING->bindParam(':reading_date', $reading_date, PDO::PARAM_INT);
+      
+      $STMTH_INSERT_READING->execute();
       $DBH_READINGS = null;
     }
   

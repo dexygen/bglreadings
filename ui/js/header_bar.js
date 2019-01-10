@@ -16,7 +16,6 @@ class HeaderBar extends React.Component {
         (xhrResponse) => {
           this.setState({isOpen: false});
           this.props.updateLogReadings(JSON.parse(xhrResponse).readings);
-          //location.reload();
         }, 
         () => {
           console.log("error2");
@@ -26,8 +25,12 @@ class HeaderBar extends React.Component {
     });
   }
   
+  componentDidMount = () => {
+    this.updateDate((new Date()).toISOString().substr(0,10));
+  }
+  
   updateDate = (dateVal) => {
-    this.setState({date: dateVal});
+    this.setState({reading_date: dateVal});
   }
   
   updateReading = () => {
