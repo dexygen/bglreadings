@@ -3,12 +3,13 @@ require('./lib/jrmvc.lib.php');
 
 class ReadingsController extends AbstractJrMvcController {
   const DB_PATH = "./readings.db";
+  
   const READINGS_TABLE_DDL = <<<EOD
     CREATE TABLE bgl_reading (
       reading_id INTEGER PRIMARY KEY,
       user_id INTEGER NOT NULL,
       reading_date DATE NOT NULL,
-      reading INTEGER NOT NULL
+      reading INTEGER NULL
     );
 EOD;
 
