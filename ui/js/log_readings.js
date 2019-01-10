@@ -1,13 +1,12 @@
 class LogReadings extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {readings: [{date: '2019-01-06', reading: 160}]};
+    this.state = {readings: []};
   }
   
   componentDidMount() {
       ajax("GET", "./api/readings.php?user_id=1", (xhrResponse) => {
-        console.log(xhrResponse);
-        this.state.readings = [{date: '2019-01-06', reading: 160}]; //JSON.parse(xhrResponse).readings;
+        this.setState({readings: (JSON.parse(xhrResponse)).readings});
       }, function() {
         console.log("error");
       });
