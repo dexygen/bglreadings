@@ -7,6 +7,11 @@ class HeaderBar extends React.Component {
   toggleModal = () => {
     this.setState({
       isOpen: !this.state.isOpen
+    }, () => {
+      if (this.state.isOpen) {
+        // TODO: clean up mess
+        this.updateDate(this.refs.readingDate.refs.dateInput.value);
+      }
     });
   }
   
@@ -24,7 +29,7 @@ class HeaderBar extends React.Component {
       );        
     });
   }
-  
+ 
   componentDidMount = () => {
     this.updateDate((new Date()).toISOString().substr(0,10));
   }
@@ -46,7 +51,7 @@ class HeaderBar extends React.Component {
         <AddReadingModal show={this.state.isOpen} onClose={this.toggleModal} saveReading={this.saveReading} >
           <h2>Add Reading</h2>
           <form>
-              <ReadingDateInput changeHandler={this.updateDate} />
+              <ReadingDateInput ref="readingDate" changeHandler={this.updateDate} />
               <div className="form-element">
                   <label>Reading</label><input ref="readingInput" onChange={this.updateReading} />
               </div>

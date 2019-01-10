@@ -47,8 +47,7 @@ function applyInputToModel() {
       $reading = filter_input(INPUT_POST, 'reading', FILTER_SANITIZE_NUMBER_INT); 
       $STMTH_INSERT_READING->bindParam(':reading', $reading, PDO::PARAM_INT);
       $reading_date = filter_input(INPUT_POST, 'reading_date', FILTER_SANITIZE_STRING);
-      $STMTH_INSERT_READING->bindParam(':reading_date', $reading_date, PDO::PARAM_INT);
-      
+      $STMTH_INSERT_READING->bindParam(':reading_date', $reading_date, PDO::PARAM_STR);
       $STMTH_INSERT_READING->execute();
       $DBH_READINGS = null;
     }
