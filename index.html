@@ -13,6 +13,7 @@
     <script src="./ui/js/header_bar.js" type="text/babel"></script>
     <script src="./ui/js/reading.js" type="text/babel"></script>
     <script src="./ui/js/log_readings.js" type="text/babel"></script>
+    <script src="./ui/js/bgl_readings_app.js" type="text/babel"></script>
   </head>
   <body>
     <div class="gutter">&nbsp;</div>
@@ -21,20 +22,7 @@
     
     <script type="text/babel">
       ReactDOM.render(
-        <div>
-          <div>
-            <h1>BGL Readings Log</h1>
-          </div>
-          <HeaderBar />
-          <div>
-            <table>
-              <tbody>
-                <tr><th>Date</th><th>Fasting BGL</th></tr>
-                <LogReadings />
-              </tbody>
-            </table>
-          </div>
-        </div>,
+        <BglReadingsApp />,
         document.getElementById('app-content')
       );
     </script>

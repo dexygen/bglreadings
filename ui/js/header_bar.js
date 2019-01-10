@@ -15,7 +15,7 @@ class HeaderBar extends React.Component {
       ajax("POST", "./api/readings.php", 
         () => {
           this.setState({isOpen: false});
-          //location.reload();
+          location.reload();
         }, 
         () => {
           console.log("error2");
