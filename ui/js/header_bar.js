@@ -11,14 +11,13 @@ class HeaderBar extends React.Component {
   }
   
   saveReading = () => {
-    var toggleModal = this.toggleModal.bind(this);
-    
-    this.setState({mode: "add", user_id: 1}, function() {
+    this.setState({mode: "add", user_id: 1}, () => {
       ajax("POST", "./api/readings.php", 
-        function() {
-          console.log("success2");
+        () => {
+          this.setState({isOpen: false});
+          location.reload();
         }, 
-        function() {
+        () => {
           console.log("error2");
         }, 
         this.state
