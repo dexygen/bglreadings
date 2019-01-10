@@ -12,6 +12,10 @@ class LogReadings extends React.Component {
       });
   }
   
+  updateReadings(readings) {
+    this.setState({readings: readings});
+  }
+  
   render() {
     return (
       this.state.readings.map((reading) => {

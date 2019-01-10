@@ -13,9 +13,10 @@ class HeaderBar extends React.Component {
   saveReading = () => {
     this.setState({mode: "add", user_id: 1}, () => {
       ajax("POST", "./api/readings.php", 
-        () => {
+        (xhrResponse) => {
           this.setState({isOpen: false});
-          location.reload();
+          this.props.updateLogReadings(JSON.parse(xhrResponse).readings);
+          //location.reload();
         }, 
         () => {
           console.log("error2");
