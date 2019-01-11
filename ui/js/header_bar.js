@@ -48,16 +48,18 @@ class HeaderBar extends React.Component {
         <div id="header-bar">
           <a href="#" onClick={this.toggleModal}>Add Reading</a>
         </div>
-        <AddReadingModal show={this.state.isOpen} onClose={this.toggleModal} saveReading={this.saveReading} >
-          <h2>Add Reading</h2>
+        <SaveReadingModal 
+            show={this.state.isOpen} 
+            onClose={this.toggleModal} 
+            saveReading={this.saveReading} 
+            saveMode="Add">
           <form>
               <ReadingDateInput ref="readingDate" changeHandler={this.updateDate} />
               <div className="form-element">
                   <label>Reading</label><input ref="readingInput" onChange={this.updateReading} />
               </div>
           </form>
-          <div>&nbsp;</div>
-        </AddReadingModal>
+        </SaveReadingModal>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-class AddReadingModal extends React.Component {
+class SaveReadingModal extends React.Component {
   render() {
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
@@ -29,7 +29,9 @@ class AddReadingModal extends React.Component {
     return (
       <div className="backdrop" style={backdropStyle}>
         <div className="modal" style={modalStyle}>
+          <h2>{this.props.saveMode} Reading</h2>
           {this.props.children}
+          <div>&nbsp;</div>
           <div className="footer">
             <button onClick={this.props.saveReading}>
               Save
