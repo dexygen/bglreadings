@@ -33,7 +33,11 @@ th {
   text-align: left;
 }
 
-table th:first-child {
+td {
+  padding-right: 0.625rem;
+}
+
+table th:nth-child(3) {
   min-width: 6rem;
 }
 

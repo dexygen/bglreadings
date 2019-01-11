@@ -13,7 +13,12 @@ class BglReadingsApp extends React.Component {
           <div>
             <table>
               <tbody>
-                <tr><th>Date</th><th>Fasting BGL</th></tr>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th>Date</th>
+                  <th>Fasting BGL</th>
+                </tr>
                 <LogReadings ref="logReadings" />
               </tbody>
             </table>
