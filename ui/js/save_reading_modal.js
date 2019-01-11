@@ -30,7 +30,12 @@ class SaveReadingModal extends React.Component {
       <div className="backdrop" style={backdropStyle}>
         <div className="modal" style={modalStyle}>
           <h2>{this.props.saveMode} Reading</h2>
-          {this.props.children}
+          <form>
+              <ReadingDateInput ref="readingDate" changeHandler={this.props.updateDate} />
+              <div className="form-element">
+                  <label>Reading</label><input ref="readingInput" onChange={this.props.updateReading} />
+              </div>
+          </form>
           <div>&nbsp;</div>
           <div className="footer">
             <button onClick={this.props.saveReading}>
