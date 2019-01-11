@@ -19,8 +19,12 @@ HERE01;
     VALUES
       (1, :reading_date, :reading)
 HERE02;
+  
+  const READINGS_TABLE_SQL_DELETE = <<<HERE03
+    DELETE FROM bgl_reading WHERE user_id=:user_id AND reading_id=:reading_id
+HERE03;
 
-function applyInputToModel() {                      
+  function applyInputToModel() {                      
     $mto = new JrMvcMTO('demo.tpl.php');             
 
     $mto = new class(JrMvcMTO::NULL_TPL) extends JrMvcMTO {
@@ -48,7 +52,22 @@ function applyInputToModel() {
       $STMTH_INSERT_READING->bindParam(':reading', $reading, PDO::PARAM_INT);
       $reading_date = filter_input(INPUT_POST, 'reading_date', FILTER_SANITIZE_STRING);
       $STMTH_INSERT_READING->bindParam(':reading_date', $reading_date, PDO::PARAM_STR);
+      
       $STMTH_INSERT_READING->execute();
+      $DBH_READINGS = null;
+    }
+  
+    function delete_reading() {
+      $DBH_READINGS = new PDO('sqlite:' . ReadingsController::DB_PATH);
+      $DBH_READINGS->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+      
+      $STMTH_DELETE_READING = $DBH_READINGS->prepare(ReadingsController::READINGS_TABLE_SQL_DELETE);
+      $reading_id = filter_input(INPUT_POST, 'reading_id', FILTER_SANITIZE_NUMBER_INT); 
+      $STMTH_DELETE_READING->bindParam(':reading_id', $reading_id, PDO::PARAM_INT);
+      $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT); 
+      $STMTH_DELETE_READING->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+      
+      $STMTH_DELETE_READING->execute();
       $DBH_READINGS = null;
     }
   
@@ -65,10 +84,16 @@ function applyInputToModel() {
       return json_encode($all_readings, JSON_HEX_APOS|JSON_HEX_QUOT);
     }
 
-    bootstrap_db();
   
-    if (!empty($_POST) && $_POST["mode"] === 'add') {
-      add_reading();
+    bootstrap_db();
+ 
+    if (!empty($_POST)) {
+      if ($_POST["mode"] === 'add') {
+        add_reading(); 
+      }
+      else if ($_POST["mode"] === 'delete') {
+        delete_reading();
+      }
     }
   
     $mto->setModelValue('readings', json_decode(json_encoded_readings())); 

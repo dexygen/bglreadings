@@ -12,14 +12,17 @@ class LogReadings extends React.Component {
       });
   }
   
-  updateReadings(readings) {
+  updateReadings = (readings) => {
     this.setState({readings: readings});
   }
   
   render() {
     return (
       this.state.readings.map((reading) => {
-        return <Reading {...reading} key={"reading-" + reading.reading_id} />
+        return <Reading {...reading} 
+                 key={"reading-" + reading.reading_id} 
+                 readingId={reading.reading_id} 
+                 updateLogReadings={this.updateReadings} />
       })
     );
   }
