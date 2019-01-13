@@ -41,6 +41,10 @@ table th:nth-child(3) {
   min-width: 6rem;
 }
 
+table th:nth-child(4), table th:nth-child(7) {
+  padding-right: 0.5rem;
+}
+
 .form-element label {
   display: inline-block;
   width: 125px;

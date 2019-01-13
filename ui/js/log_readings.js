@@ -6,14 +6,16 @@ class LogReadings extends React.Component {
   
   componentDidMount() {
       ajax("GET", "./api/readings.php?user_id=1", (xhrResponse) => {
-        this.setState({readings: (JSON.parse(xhrResponse)).readings});
+        this.setState({
+          readings: readingsLib.applyTrends((JSON.parse(xhrResponse)).readings)
+        });
       }, function() {
         console.log("error");
       });
   }
   
   updateReadings = (readings) => {
-    this.setState({readings: readings});
+    this.setState({readings: readingsLib.applyTrends(readings)});
   }
   
   render() {

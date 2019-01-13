@@ -18,6 +18,9 @@ class BglReadingsApp extends React.Component {
                   <th></th>
                   <th>Date</th>
                   <th>Fasting BGL</th>
+                  <th>Trending...</th>
+                  <th>Overall..</th>
+                  <th>Since Prior</th>
                 </tr>
                 <LogReadings ref="logReadings" />
               </tbody>

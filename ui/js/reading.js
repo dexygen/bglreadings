@@ -20,6 +20,9 @@ class Reading extends React.Component {
         <td><a href="#">Edit</a></td>
         <td>{this.props.reading_date}</td>
         <td>{this.props.reading}</td>
+        <td></td>
+        <td>{this.props.trendOverall}</td>
+        <td>{this.props.trendSincePrior}</td>
       </tr>
     );
   }
